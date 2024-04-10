@@ -1,32 +1,29 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Sido;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
-class ProfileApplication extends Model
+
+class CompetitionStatus extends Model
 {
     use HasFactory;
     protected $keyType = 'string';
     public $incrementing = false;
+
     protected $fillable = [
+        'competitors', //array
+        'competitiveAdvantage',
+        'marketStrategy',
+        'teamCapacity',
         'applicationCode',
-        'fullName',
-        'birthYear',
-        'nidaNumber',
-        'educationLevel',
-        'BusinessRegStatus',
-        'phoneNumber',
-        'email',
-        'businessSector',
-        'businessName',
-        'businessLocation',
+        'isFilled',
+        //Attachments
     ];
     public static function boot() {
         parent::boot();
-
         static::creating(function ($model) {
             $model->id = Str::uuid();
         });

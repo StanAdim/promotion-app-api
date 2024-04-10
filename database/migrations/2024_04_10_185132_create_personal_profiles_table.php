@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProfileApplicationsTable extends Migration
+class CreatePersonalProfilesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,10 @@ class CreateProfileApplicationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('profile_applications', function (Blueprint $table) {
+        Schema::create('personal_profiles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('applicationCode');
+            $table->boolean('isFilled');
             $table->string('fullName');
             $table->string('birthYear');
             $table->string('nidaNumber');
@@ -37,6 +38,6 @@ class CreateProfileApplicationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('profile_applications');
+        Schema::dropIfExists('personal_profiles');
     }
 }
