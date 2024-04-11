@@ -15,7 +15,6 @@ class PersonalProfile extends Model
 
     protected $fillable = [
         'applicationCode',
-        'isFilled',
         'fullName',
         'birthYear',
         'nidaNumber',

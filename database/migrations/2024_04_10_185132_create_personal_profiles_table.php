@@ -16,7 +16,6 @@ class CreatePersonalProfilesTable extends Migration
         Schema::create('personal_profiles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('applicationCode');
-            $table->boolean('isFilled');
             $table->string('fullName');
             $table->string('birthYear');
             $table->string('nidaNumber');

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileApplicationController;
+use App\Http\Controllers\Sido\PersonalProfileController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -18,4 +19,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::post('/create-profile-application', [ProfileApplicationController::class, 'store']);
+// Route::post('/create-applicant-profile', [ProfileApplicationController::class, 'store']);
+Route::post('/create-applicant-profile', [PersonalProfileController::class, 'store']);
