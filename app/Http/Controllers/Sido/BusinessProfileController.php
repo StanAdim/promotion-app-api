@@ -3,39 +3,35 @@
 namespace App\Http\Controllers\Sido;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sido\BusinessProfile;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class BusinessProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function store(Request $request , $slug)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $validator = Validator::make($request->all(), [
+            'applicationCode' => 'required',
+            'background' => 'required',
+            'marketProblem' => 'required',
+            'marketBase' => 'required',
+            'prototypeDescription' => 'required',
+            'marketSize' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'message'=> 'Validation fails',
+                'errors'=> $validator->errors()
+            ],422);
+        }
+        $data = $validator->validate();
+        $newBusinessProfile = BusinessProfile::create($data); 
+        return response()->json([
+            'message'=> "Business Profile Saved",
+            'data' => $newBusinessProfile
+        ],200);
+        
     }
 
     /**

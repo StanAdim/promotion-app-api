@@ -3,39 +3,33 @@
 namespace App\Http\Controllers\Sido;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sido\CompetitionStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class CompetitionStatusController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    public function store(Request $request, $slug)
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+        $validator = Validator::make($request->all(), [
+            'applicationCode' => 'required',
+            'competitors' => 'required',
+            'competitiveAdvantage' => 'required',
+            'marketStrategy' => 'required',
+            'teamCapacity' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'message'=> 'Validation fails',
+                'errors'=> $validator->errors()
+            ],422);
+        }
+        $data = $validator->validate();
+        $newBusinessProfile = CompetitionStatus::create($data); 
+        return response()->json([
+            'message'=> "Competition Profile Saved",
+            'data' => $newBusinessProfile
+        ],200);
     }
 
     /**

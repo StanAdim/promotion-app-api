@@ -16,7 +16,7 @@ class CreateBusinessProfilesTable extends Migration
         Schema::create('business_profiles', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('applicationCode');
-            $table->boolean('isFilled');
+            $table->boolean('isFilled')->default(false);
             $table->longText('background');
             $table->longText('marketProblem');
             $table->longText('marketBase');

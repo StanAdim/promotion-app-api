@@ -16,7 +16,7 @@ class CreateProjectionsTable extends Migration
         Schema::create('projections', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('applicationCode');
-            $table->boolean('isFilled');
+            $table->boolean('isFilled')->default(false);
             $table->string('expectedRevenue');
             $table->string('machineEquipment'); //array
             $table->string('workingCapital');

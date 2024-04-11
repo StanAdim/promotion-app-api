@@ -16,7 +16,7 @@ class CreateCompetitionStatusesTable extends Migration
         Schema::create('competition_statuses', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->string('applicationCode');
-            $table->boolean('isFilled');
+            $table->boolean('isFilled')->default(false);
             $table->string('competitors'); //array
             $table->longText('competitiveAdvantage');
             $table->longText('marketStrategy');

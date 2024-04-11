@@ -3,39 +3,36 @@
 namespace App\Http\Controllers\Sido;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sido\Projection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class ProjectionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'applicationCode' => 'required',
+            'expectedRevenue' => 'required',
+            'machineEquipment' => 'required',
+            'workingCapital' => 'required',
+            'investmentPlan' => 'required',
+            'financingSource' => 'required',
+            'challenges' => 'required',
+            'supportNeeded' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'message'=> 'Validation fails',
+                'errors'=> $validator->errors()
+            ],422);
+        }
+        $data = $validator->validate();
+        $newBusinessProfile = Projection::create($data); 
+        return response()->json([
+            'message'=> "Business Projection Saved",
+            'data' => $newBusinessProfile
+        ],200);
     }
 
     /**
