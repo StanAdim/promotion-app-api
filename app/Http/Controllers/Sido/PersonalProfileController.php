@@ -39,7 +39,7 @@ class PersonalProfileController extends Controller
         $newProfileApplication = PersonalProfile::create($data); 
         // Mail::to($newProfileApplication->email)->send(new ForumMail($newParticipator));
         return response()->json([
-            'message'=> "Success",
+            'message'=> "Applicant Profile Saved",
             'data' => $newProfileApplication
         ],200);
     }
