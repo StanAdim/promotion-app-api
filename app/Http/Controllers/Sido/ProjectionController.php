@@ -34,7 +34,6 @@ class ProjectionController extends Controller
             'data' => $newBusinessProfile
         ],200);
     }
-
     /**
      * Display the specified resource.
      *
