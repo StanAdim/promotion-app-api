@@ -2,17 +2,23 @@
 
 namespace App\Http\Resources\Sido;
 
+use Illuminate\Http\Resources\Json\JsonResource;
+use App\Models\Sido\Projection;
 use App\Models\Sido\BusinessProfile;
 use App\Models\Sido\CompetitionStatus;
-use App\Models\Sido\Projection;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApplicationResource extends JsonResource
 {
-    public function toArray(Request $request): array
+    /**
+     * Transform the resource into an array.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable
+     */
+    public function toArray($request)
     {
-        return [
+        return 
+        [
             'id' => $this->id,
             'applicationCode' => $this->applicationCode,
             'fullName' => $this->fullName,
@@ -34,5 +40,6 @@ class ApplicationResource extends JsonResource
             'projectionDetails' => ProjectionResource::
                         collection(Projection::where('applicationCode', $this->id)->get())->first(),
             ];   
-         }
+         
+    }
 }
