@@ -61,28 +61,58 @@ class BusinessProfileController extends Controller
         }
 
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
         //
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function searchBusinessDetail($slug)
     {
-        //
+        // $slug pass id of applicant
+        $businessDetails = BusinessProfileResource::collection(BusinessProfile::where('applicationCode',$slug)->get())->first();
+        if($businessDetails){
+            return response()->json([
+                'message'=> 'Applicant Business Detail ',
+                'data' => $businessDetails,
+                'code' => 200
+            ]);
+        }
+        return response()->json([
+            'message'=> 'Fails to Fetch Details',
+            'code' => 300
+        ]);
+    }
+
+    public function update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id'=> 'required',
+            'applicationCode' => '',
+            'background' => '',
+            'marketProblem' => '',
+            'marketBase' => '',
+            'prototypeDescription' => '',
+            'marketSize' => '',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'message'=> 'Validation fails',
+                'errors'=> $validator->errors()
+            ],422);
+        }
+        $data = $validator->validate();
+        $isUpdated = BusinessProfile::where('id', $data['id'])->update($data);
+        if($isUpdated){
+            $dataUpdated = BusinessProfileResource::collection(BusinessProfile::where('id', $data['id'])->get())->first();
+            return response()->json([
+                'message'=> 'Business Data Updated',
+                'data' => $dataUpdated,
+                'code' => 200
+             ]);
+        }
+        return response()->json([
+            'message'=> 'Data Updated Failed',
+            'code' => 300
+        ]);
     }
 
     /**

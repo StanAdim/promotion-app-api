@@ -22,14 +22,18 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/test', function(){ return 'Test Api'; });
 
 
-Route::get('/applicant-profiles', [PersonalProfileController::class, 'index']);
-Route::get('/get-application-profile/{slug}', [PersonalProfileController::class, 'searchApplicationCode']);
+Route::get('/get-applicant-profiles', [PersonalProfileController::class, 'index']);
 Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'show']);
 Route::post('/create-applicant-profile', [PersonalProfileController::class, 'store']);
 Route::post('/update-applicant-profile', [PersonalProfileController::class, 'update']);
+Route::get('/get-application-profile/{slug}', [PersonalProfileController::class, 'searchApplicationCode']);
 
 Route::post('/create-business-profile/{slug}', [BusinessProfileController::class, 'store']);
-Route::get('/get-business-profile/{slug}', [BusinessProfileController::class, 'show']);
+Route::post('/update-business-profile/{slug}', [BusinessProfileController::class, 'update']);
+Route::get('/get-business-profile/{slug}', [BusinessProfileController::class, 'searchBusinessDetail']);
 
 Route::post('/create-competition-profile/{slug}', [CompetitionStatusController::class, 'store']);
+Route::post('/update-competition-profile/{slug}', [CompetitionStatusController::class, 'update']);
+
 Route::post('/create-business-projection/{slug}', [ProjectionController::class, 'store']);
+Route::post('/update-business-projection/{slug}', [ProjectionController::class, 'update']);

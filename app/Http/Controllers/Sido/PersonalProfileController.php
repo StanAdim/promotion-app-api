@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sido;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Sido\ApplicationResource;
+use App\Http\Resources\Sido\PersonalProfileResource;
 use App\Models\Sido\PersonalProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -67,7 +68,8 @@ class PersonalProfileController extends Controller
 
     public function searchApplicationCode($slug)
     {
-        $appplication = ApplicationResource::collection(PersonalProfile::where('applicationCode',$slug)->get())->first();
+        $appplication = PersonalProfileResource::collection(PersonalProfile::where('applicationCode',$slug)->get())->first();
+        
         return response()->json([
             'message'=> 'Application Details',
             'data' => $appplication
@@ -100,7 +102,7 @@ class PersonalProfileController extends Controller
         $data = $validator->validate();
         $isUpdated = PersonalProfile::where('id', $data['id'])->update($data);
         if($isUpdated){
-            $dataUpdated = PersonalProfile::where('id', $data['id'])->get()->first();
+            $dataUpdated = PersonalProfileResource::collection(PersonalProfile::where('id', $data['id'])->get())->first();
             return response()->json([
                 'message'=> 'Application Data Updated',
                 'data' => $dataUpdated,
