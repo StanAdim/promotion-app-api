@@ -26,6 +26,7 @@ Route::get('/applicant-profiles', [PersonalProfileController::class, 'index']);
 Route::get('/get-application-profile/{slug}', [PersonalProfileController::class, 'searchApplicationCode']);
 Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'show']);
 Route::post('/create-applicant-profile', [PersonalProfileController::class, 'store']);
+Route::post('/update-applicant-profile', [PersonalProfileController::class, 'update']);
 
 Route::post('/create-business-profile/{slug}', [BusinessProfileController::class, 'store']);
 Route::get('/get-business-profile/{slug}', [BusinessProfileController::class, 'show']);

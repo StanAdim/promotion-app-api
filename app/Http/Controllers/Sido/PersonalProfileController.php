@@ -74,9 +74,43 @@ class PersonalProfileController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id'=> 'required',
+            'fullName' => 'required|max:225|min:3',
+            'birthYear' => 'required',
+            // 'nidaNumber' => 'required|max:20|min:20',
+            'nidaNumber' => 'required',
+            'educationLevel' => 'required',
+            'BusinessRegStatus' => 'required',
+            // 'phoneNumber' => 'required|max:12|min:12|unique:profile_applications',
+            // 'phoneNumber' => 'required',
+            // 'email' => 'required|email|unique:profile_applications',
+            'businessSector' => '',
+            'businessName' => '',
+            'businessLocation' => '',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'message'=> 'Validation fails',
+                'errors'=> $validator->errors()
+            ],422);
+        }
+        $data = $validator->validate();
+        $isUpdated = PersonalProfile::where('id', $data['id'])->update($data);
+        if($isUpdated){
+            $dataUpdated = PersonalProfile::where('id', $data['id'])->get()->first();
+            return response()->json([
+                'message'=> 'Application Data Updated',
+                'data' => $dataUpdated,
+                'code' => 200
+             ]);
+        }
+        return response()->json([
+            'message'=> 'Updated Failed',
+            'code' => 300
+        ]);
     }
 
     public function destroy($id)
