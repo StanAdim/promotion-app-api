@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Sido;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Sido\BusinessProfileResource;
 use App\Models\Sido\BusinessProfile;
+use App\Models\Sido\PersonalProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -29,7 +31,8 @@ class BusinessProfileController extends Controller
         $newBusinessProfile = BusinessProfile::create($data); 
         return response()->json([
             'message'=> "Business Profile Saved",
-            'data' => $newBusinessProfile
+            'data' => $newBusinessProfile,
+            'code'=> 200
         ],200);
         
     }
@@ -40,9 +43,23 @@ class BusinessProfileController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        $newBusinessProfile = BusinessProfileResource::collection(BusinessProfile::where('applicationCode',$slug)->get())->first(); 
+        if($newBusinessProfile){
+            return response()->json([
+                'message'=> "Business Profile",
+                'data'=> $newBusinessProfile,
+                'code' => 200
+            ]);
+        }
+        else{
+            return  response()->json([
+                'message'=> "No Business Profile",
+                'code'=> 300,
+            ]);
+        }
+
     }
 
     /**

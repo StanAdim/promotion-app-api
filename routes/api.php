@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\ProfileApplicationController;
 use App\Http\Controllers\Sido\BusinessProfileController;
 use App\Http\Controllers\Sido\CompetitionStatusController;
 use App\Http\Controllers\Sido\PersonalProfileController;
@@ -12,7 +11,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-|
 | Here is where you can register API routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
@@ -25,10 +23,12 @@ Route::get('/test', function(){ return 'Test Api'; });
 
 
 Route::get('/applicant-profiles', [PersonalProfileController::class, 'index']);
+Route::get('/get-application-profile/{slug}', [PersonalProfileController::class, 'searchApplicationCode']);
 Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'show']);
 Route::post('/create-applicant-profile', [PersonalProfileController::class, 'store']);
 
 Route::post('/create-business-profile/{slug}', [BusinessProfileController::class, 'store']);
+Route::get('/get-business-profile/{slug}', [BusinessProfileController::class, 'show']);
 
 Route::post('/create-competition-profile/{slug}', [CompetitionStatusController::class, 'store']);
 Route::post('/create-business-projection/{slug}', [ProjectionController::class, 'store']);

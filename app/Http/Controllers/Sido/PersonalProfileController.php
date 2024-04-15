@@ -20,6 +20,7 @@ class PersonalProfileController extends Controller
     }
     public function store(Request $request)
     {
+        // return $request;
         $validator = Validator::make($request->all(), [
             'fullName' => 'required|max:225|min:3',
             'birthYear' => 'required',
@@ -64,9 +65,13 @@ class PersonalProfileController extends Controller
         ]);
     }
 
-    public function edit($id)
+    public function searchApplicationCode($slug)
     {
-        //
+        $appplication = ApplicationResource::collection(PersonalProfile::where('applicationCode',$slug)->get())->first();
+        return response()->json([
+            'message'=> 'Application Details',
+            'data' => $appplication
+        ]);
     }
 
     public function update(Request $request, $id)
