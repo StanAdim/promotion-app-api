@@ -69,10 +69,16 @@ class PersonalProfileController extends Controller
     public function searchApplicationCode($slug)
     {
         $appplication = PersonalProfileResource::collection(PersonalProfile::where('applicationCode',$slug)->get())->first();
-        
+        if($appplication){
+            return response()->json([
+                'message'=> 'Application Details Found',
+                'data' => $appplication,
+                'code'=> 200
+            ]);
+        }
         return response()->json([
-            'message'=> 'Application Details',
-            'data' => $appplication
+            'message'=> 'Application Not Found!, Apply Now',
+            'code'=> 300
         ]);
     }
 

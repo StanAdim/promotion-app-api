@@ -15,7 +15,7 @@ class CompetitorResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this -> id, 
+            'uuid' => $this -> id, 
             'competitors' => $this -> competitors, //array
             'competitiveAdvantage' => $this -> competitiveAdvantage,
             'marketStrategy' => $this -> marketStrategy,

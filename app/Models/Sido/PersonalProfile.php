@@ -25,6 +25,9 @@ class PersonalProfile extends Model
         'businessSector',
         'businessName',
         'businessLocation',
+        'hasBusiInfo',
+        'hasCompInfo',
+        'hasProjInfo',
     ];
     public static function boot() {
         parent::boot();

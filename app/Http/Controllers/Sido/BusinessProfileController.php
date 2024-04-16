@@ -28,7 +28,10 @@ class BusinessProfileController extends Controller
             ],422);
         }
         $data = $validator->validate();
-        $newBusinessProfile = BusinessProfile::create($data); 
+        $newBusinessProfile = BusinessProfile::create($data);
+        PersonalProfile::where('id', $newBusinessProfile['applicationCode'])->update([
+            'hasBusiInfo' => true
+        ]);
         return response()->json([
             'message'=> "Business Profile Saved",
             'data' => $newBusinessProfile,
@@ -48,7 +51,7 @@ class BusinessProfileController extends Controller
         $newBusinessProfile = BusinessProfileResource::collection(BusinessProfile::where('applicationCode',$slug)->get())->first(); 
         if($newBusinessProfile){
             return response()->json([
-                'message'=> "Business Profile",
+                'message'=> "Business Profile Found",
                 'data'=> $newBusinessProfile,
                 'code' => 200
             ]);
@@ -59,7 +62,6 @@ class BusinessProfileController extends Controller
                 'code'=> 300,
             ]);
         }
-
     }
     public function edit($id)
     {
@@ -86,7 +88,6 @@ class BusinessProfileController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id'=> 'required',
-            'applicationCode' => '',
             'background' => '',
             'marketProblem' => '',
             'marketBase' => '',

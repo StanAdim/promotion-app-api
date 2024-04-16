@@ -27,6 +27,9 @@ class PersonalProfileResource extends JsonResource
             'businessSector' => $this->businessSector,
             'businessName' => $this->businessName,
             'businessLocation' => $this->businessLocation,
+            'hasBusiInfo' => $this->hasBusiInfo,
+            'hasCompInfo' => $this->hasCompInfo,
+            'hasProjInfo' => $this->hasProjInfo,
             'createdTime' => date('h:i A', strtotime($this->created_at)),
             'createdDate' => date('F j, Y', strtotime($this->created_at)),
             ];

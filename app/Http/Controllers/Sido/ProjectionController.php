@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Sido;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Sido\ProjectionResource;
 use App\Models\Sido\Projection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -34,38 +35,55 @@ class ProjectionController extends Controller
             'data' => $newBusinessProfile
         ],200);
     }
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function searchProjectionDetail($slug)
     {
-        //
+        // $slug pass id of applicant
+        $searchDetails = ProjectionResource::collection(Projection::where('applicationCode',$slug)->get())->first();
+        if($searchDetails){
+            return response()->json([
+                'message'=> 'Projection Detail Found',
+                'data' => $searchDetails,
+                'code' => 200
+            ]);
+        }
+        return response()->json([
+            'message'=> 'Fails to Fetch Details',
+            'code' => 300
+        ]);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'id'=> 'required',
+            'expectedRevenue' => '',
+            'machineEquipment' => '',
+            'workingCapital' => '',
+            'investmentPlan' => '',
+            'financingSource' => '',
+            'challenges' => '',
+            'supportNeeded' => '',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'message'=> 'Validation fails',
+                'errors'=> $validator->errors()
+            ],422);
+        }
+        $data = $validator->validate();
+        $isUpdated = Projection::where('id', $data['id'])->update($data);
+        if($isUpdated){
+            $dataUpdated = ProjectionResource::collection(Projection::where('id', $data['id'])->get())->first();
+            return response()->json([
+                'message'=> 'Projection Data Updated',
+                'data' => $dataUpdated,
+                'code' => 200
+             ]);
+        }
+        return response()->json([
+            'message'=> 'Data Updated Failed',
+            'code' => 300
+        ]);
     }
 
     /**

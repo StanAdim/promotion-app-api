@@ -26,6 +26,9 @@ class CreatePersonalProfilesTable extends Migration
             $table->string('businessSector')->nullable();
             $table->string('businessName')->nullable();
             $table->string('businessLocation')->nullable();
+            $table->string('hasProjInfo')->default(false);
+            $table->string('hasCompInfo')->default(false);
+            $table->string('hasBusiInfo')->default(false);
             $table->timestamps();
         });
     }
