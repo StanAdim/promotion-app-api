@@ -22,12 +22,12 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/test', function(){ return 'Test Api'; });
 
 
-Route::get('/get-applicant-profiles', [PersonalProfileController::class, 'index']);
+Route::get('/retrieve-applicant-profiles', [PersonalProfileController::class, 'index']);
 
 Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'show']);
 Route::post('/create-applicant-profile', [PersonalProfileController::class, 'store']);
 Route::post('/update-applicant-profile', [PersonalProfileController::class, 'update']);
-Route::get('/get-applicant-profile/{slug}', [PersonalProfileController::class, 'searchApplicationCode']);
+Route::get('/get-applicant-details/code-{slug}', [PersonalProfileController::class, 'searchApplicationCode']);
 
 Route::post('/create-business-profile/{slug}', [BusinessProfileController::class, 'store']);
 Route::get('/get-business-profile/{slug}', [BusinessProfileController::class, 'searchBusinessDetail']);

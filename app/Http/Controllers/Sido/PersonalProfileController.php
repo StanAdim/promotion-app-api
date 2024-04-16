@@ -71,7 +71,7 @@ class PersonalProfileController extends Controller
         $appplication = PersonalProfileResource::collection(PersonalProfile::where('applicationCode',$slug)->get())->first();
         if($appplication){
             return response()->json([
-                'message'=> 'Application Details Found',
+                'message'=> 'Applicant Details:  Found',
                 'data' => $appplication,
                 'code'=> 200
             ]);
