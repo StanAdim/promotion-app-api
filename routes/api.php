@@ -20,7 +20,7 @@ Route::get('/test', function(){ return 'Test Api'; });
 
 Route::get('/retrieve-applicant-profiles', [PersonalProfileController::class, 'index']);
 
-Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'retriveApplication']);
+Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'show']);
 Route::post('/create-applicant-profile', [PersonalProfileController::class, 'store']);
 Route::post('/update-applicant-profile', [PersonalProfileController::class, 'update']);
 Route::get('/get-applicant-details/code-{slug}', [PersonalProfileController::class, 'searchApplicationCode']);
