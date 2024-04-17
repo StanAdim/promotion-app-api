@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Sido;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Sido\ProjectionResource;
+use App\Models\Sido\PersonalProfile;
 use App\Models\Sido\Projection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -29,10 +30,13 @@ class ProjectionController extends Controller
             ],422);
         }
         $data = $validator->validate();
-        $newBusinessProfile = Projection::create($data); 
+        $newProjection = Projection::create($data); 
+        PersonalProfile::where('id', $newProjection['applicationCode'])->update([
+            'hasProjInfo' => true
+        ]);
         return response()->json([
             'message'=> "Business Projection Saved",
-            'data' => $newBusinessProfile
+            'data' => $newProjection
         ],200);
     }
 

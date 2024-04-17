@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Sido;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Sido\CompetitorResource;
 use App\Models\Sido\CompetitionStatus;
+use App\Models\Sido\PersonalProfile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -27,6 +28,9 @@ class CompetitionStatusController extends Controller
         }
         $data = $validator->validate();
         $newCompetitionStatus = CompetitionStatus::create($data); 
+        PersonalProfile::where('id', $newCompetitionStatus['applicationCode'])->update([
+            'hasCompInfo' => true
+        ]);
         return response()->json([
             'message'=> "Competition Profile Saved",
             'data' => $newCompetitionStatus
