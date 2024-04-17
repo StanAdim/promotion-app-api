@@ -13,7 +13,7 @@ use Illuminate\Support\Str;
 class PersonalProfileController extends Controller
 {
     public function index(){
-        $personalProfiles = PersonalProfileResource::collection(PersonalProfile::all());
+        $personalProfiles = PersonalProfileResource::collection(PersonalProfile::all()->sortBy('fullName'));
         return response()->json([
             'message'=> 'Sido applicants: Found',
             'data' => $personalProfiles
@@ -57,13 +57,21 @@ class PersonalProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function retriveApplication($slug)
     {
         $appplication = ApplicationResource::collection(PersonalProfile::where('id',$slug)->get())[0];
+        if($appplication){
+            return response()->json([
+                'message'=> 'Application Details: Found',
+                'data' => $appplication,
+                'code' => 200
+            ]);
+        }
         return response()->json([
-            'message'=> 'Application Details',
-            'data' => $appplication
+            'message'=> 'Application Not Found',
+            'code' => 300
         ]);
+
     }
 
     public function searchApplicationCode($slug)

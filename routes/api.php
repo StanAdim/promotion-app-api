@@ -11,10 +11,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | API Routes
 |--------------------------------------------------------------------------
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
 */
 Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
@@ -24,7 +20,7 @@ Route::get('/test', function(){ return 'Test Api'; });
 
 Route::get('/retrieve-applicant-profiles', [PersonalProfileController::class, 'index']);
 
-Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'show']);
+Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'retriveApplication']);
 Route::post('/create-applicant-profile', [PersonalProfileController::class, 'store']);
 Route::post('/update-applicant-profile', [PersonalProfileController::class, 'update']);
 Route::get('/get-applicant-details/code-{slug}', [PersonalProfileController::class, 'searchApplicationCode']);
