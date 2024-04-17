@@ -13,9 +13,9 @@ use Illuminate\Support\Str;
 class PersonalProfileController extends Controller
 {
     public function index(){
-        $personalProfiles = ApplicationResource::collection(PersonalProfile::all());
+        $personalProfiles = PersonalProfileResource::collection(PersonalProfile::all());
         return response()->json([
-            'message'=> 'Personal Profiles',
+            'message'=> 'Sido applicants: Found',
             'data' => $personalProfiles
         ]);
     }
