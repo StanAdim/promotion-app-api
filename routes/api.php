@@ -19,7 +19,8 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 Route::get('/test', function(){ return 'Test Api'; });
 
 
-Route::post('/auth-login', [AuthUserController::class, 'login']);
+Route::post('/auth/log-user-in', [AuthUserController::class, 'login']);
+
 Route::get('/retrieve-applicant-profiles', [PersonalProfileController::class, 'index']);
 
 Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'show']);
