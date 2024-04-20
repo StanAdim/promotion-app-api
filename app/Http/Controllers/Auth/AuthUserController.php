@@ -36,8 +36,8 @@ class AuthUserController extends Controller
             } else {
                 return response()->json([
                     'message' => 'Incorrect Credentials',
-                    'data' => ''
-                ], 400);
+                    'code' => 300
+                ], 200);
             }
         }
         return response()->json([
