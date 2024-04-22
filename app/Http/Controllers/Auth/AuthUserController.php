@@ -45,4 +45,12 @@ class AuthUserController extends Controller
             'code' => 300,
         ]);
     }
+    public function logout(Request $request ){
+        #Log user out
+
+        return response()->json([
+            'message' => 'User Logged Out',
+            'code' => 200,
+        ]);
+    }
 }

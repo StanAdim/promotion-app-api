@@ -20,6 +20,7 @@ Route::get('/test', function(){ return 'Test Api'; });
 
 
 Route::post('/auth/log-user-in', [AuthUserController::class, 'login']);
+Route::post('/auth/log-user-out', [AuthUserController::class, 'logout']);
 
 Route::get('/retrieve-applicant-profiles', [PersonalProfileController::class, 'index']);
 
