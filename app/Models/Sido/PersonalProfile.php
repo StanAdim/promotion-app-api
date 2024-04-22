@@ -28,6 +28,7 @@ class PersonalProfile extends Model
         'hasBusiInfo',
         'hasCompInfo',
         'hasProjInfo',
+        'submissionStatus',
     ];
     public static function boot() {
         parent::boot();

@@ -29,6 +29,7 @@ class CreatePersonalProfilesTable extends Migration
             $table->string('hasProjInfo')->default(false);
             $table->string('hasCompInfo')->default(false);
             $table->string('hasBusiInfo')->default(false);
+            $table->string('submissionStatus')->default(false);
             $table->timestamps();
         });
     }

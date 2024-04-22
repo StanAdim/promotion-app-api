@@ -19,19 +19,18 @@ class PersonalProfileController extends Controller
             'data' => $personalProfiles
         ]);
     }
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         // return $request;
         $validator = Validator::make($request->all(), [
             'fullName' => 'required|max:225|min:3',
             'birthYear' => 'required',
-            // 'nidaNumber' => 'required|max:20|min:20',
-            'nidaNumber' => 'required',
+            'nidaNumber' => '',
+            // 'nidaNumber' => 'required',
             'educationLevel' => 'required',
             'BusinessRegStatus' => 'required',
-            // 'phoneNumber' => 'required|max:12|min:12|unique:profile_applications',
-            'phoneNumber' => 'required',
-            'email' => 'required|email|unique:profile_applications',
+            'phoneNumber' => 'required|starts_with:+255|max:13|min:10|unique:personal_profiles',
+            // 'phoneNumber' => 'required',
+            'email' => 'required|email|unique:personal_profiles',
             'businessSector' => '',
             'businessName' => '',
             'businessLocation' => '',
@@ -57,8 +56,7 @@ class PersonalProfileController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
-    {
+    public function show($slug){
         $appplication = ApplicationResource::collection(PersonalProfile::where('id',$slug)->get())[0];
         if($appplication){
             return response()->json([
@@ -73,9 +71,25 @@ class PersonalProfileController extends Controller
         ]);
 
     }
+    public function submitApplication($slug)    {
+        $appplication = PersonalProfile::where('id',$slug)->get()->first();
+        if($appplication){
+            PersonalProfile::where('id', $slug)->update([
+                'submissionStatus' => true
+            ]);
+            return response()->json([
+                'message'=> 'Application Submitted Successful',
+                'code' => 200
+            ]);
+        }
+        return response()->json([
+            'message'=> 'Application Not Found',
+            'code' => 300
+        ]);
 
-    public function searchApplicationCode($slug)
-    {
+    }
+
+    public function searchApplicationCode($slug){
         $appplication = PersonalProfileResource::collection(PersonalProfile::where('applicationCode',$slug)->get())->first();
         if($appplication){
             return response()->json([
@@ -85,7 +99,7 @@ class PersonalProfileController extends Controller
             ]);
         }
         return response()->json([
-            'message'=> 'Application Not Found!, Apply Now',
+            'message'=> 'Something is Wrong! CODE UNAVAILABLE',
             'code'=> 300
         ]);
     }
