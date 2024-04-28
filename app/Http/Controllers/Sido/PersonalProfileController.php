@@ -103,6 +103,20 @@ class PersonalProfileController extends Controller
             'code'=> 300
         ]);
     }
+    public function handleSearchByName($slug){
+        $searchResults = PersonalProfileResource::collection(PersonalProfile::where('fullName', 'like', "%$slug%")->get());
+        if($searchResults){
+            return response()->json([
+                'message'=> 'Applicants Details:  Found',
+                'data' => $searchResults,
+                'code'=> 200
+            ]);
+        }
+        return response()->json([
+            'message'=> 'Something is Wrong! CODE UNAVAILABLE',
+            'code'=> 300
+        ]);
+    }
 
     public function update(Request $request)
     {
