@@ -24,6 +24,7 @@ Route::post('/auth/log-user-out', [AuthUserController::class, 'logout']);
 
 Route::get('/retrieve-applicant-profiles', [PersonalProfileController::class, 'index']);
 Route::get('/application-search-by-name/{seachKey}', [PersonalProfileController::class, 'handleSearchByName']);
+Route::get('/application-download/{seachKey}', [PersonalProfileController::class, 'handleApplicationDownload']);
 
 Route::get('/application-before-submission/{slug}', [PersonalProfileController::class, 'show']);
 Route::post('/create-applicant-profile', [PersonalProfileController::class, 'store']);

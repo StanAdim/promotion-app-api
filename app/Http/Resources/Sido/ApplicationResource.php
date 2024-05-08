@@ -33,6 +33,7 @@ class ApplicationResource extends JsonResource
             'businessLocation' => $this->businessLocation,
             'createdTime' => date('h:i A', strtotime($this->created_at)),
             'createdDate' => date('F j, Y', strtotime($this->created_at)),
+            
             'businessDetails' => BusinessProfileResource::
                         collection(BusinessProfile::where('applicationCode', $this->id)->get())->first(),
             'competitorsDetails' => CompetitorResource::

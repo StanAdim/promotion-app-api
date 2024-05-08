@@ -5,7 +5,12 @@ namespace App\Http\Controllers\Sido;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Sido\ApplicationResource;
 use App\Http\Resources\Sido\PersonalProfileResource;
+use App\Models\Sido\BusinessProfile;
+use App\Models\Sido\CompetitionStatus;
 use App\Models\Sido\PersonalProfile;
+use App\Models\Sido\Projection;
+use Barryvdh\DomPDF\Facade\Pdf as FacadePdf;
+use Barryvdh\DomPDF\PDF;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -71,6 +76,7 @@ class PersonalProfileController extends Controller
         ]);
 
     }
+
     public function submitApplication($slug)    {
         $appplication = PersonalProfile::where('id',$slug)->get()->first();
         if($appplication){
@@ -160,5 +166,27 @@ class PersonalProfileController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function handleApplicationDownload($slug){
+        $application = ApplicationResource::collection(PersonalProfile::where('id',$slug)->get())->first();
+        
+        if($application){
+            $pdf = FacadePdf::loadView('pdf.sido_application', 
+            [   'application' =>  $application,
+                'businessDetails' =>BusinessProfile::where('applicationCode', $application->id)->get()->first(),
+                'competitorsDetails' => CompetitionStatus::where('applicationCode', $application->id)->get()->first(),
+                'projectionDetails' => Projection::where('applicationCode', $application->id)->get()->first(),
+                ])
+            ->setPaper('a4', 'landscape');
+    
+            // return $pdf->download('application-details.pdf');   
+            return $pdf->stream();;   
+           
+        }
+        return response()->json([
+            'message'=> 'Application Not Found',
+            'code' => 300
+        ]);
+
     }
 }
